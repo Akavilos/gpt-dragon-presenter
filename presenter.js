@@ -34,14 +34,17 @@ class DragonPresenter {
     let speech=this.talking;
     if(this.analyser){this.analyser.getByteTimeDomainData(this.samples);speech=this.samples.reduce((s,v)=>s+(v-128)**2,0)/this.samples.length>15;}
     const blink=now%4.3>4.10;
-    let expression=this.expression;if(expression==='neutral')expression=blink?'blink':speech&&Math.sin(now*16)>.05?'talk':'neutral';
+    let expression=this.expression;if(expression==='neutral'||expression==='talk')expression=blink?'blink':(speech||this.expression==='talk')&&Math.sin(now*16)>.05?'talk':'neutral';
     const base=this.images.neutral,state=this.images[expression];if(!base||!state)return;
     const actorY=h-this.size-35+dy;
     ctx.save();ctx.translate(this.x+this.size/2,actorY+this.size/2);ctx.scale(flip*turn,1);
     ctx.rotate(Math.sin(now*1.7)*.008);ctx.translate(-this.size/2,-this.size/2);
     ctx.drawImage(base,0,0,this.size,this.size);
-    if(expression!=='neutral'){const [x,y,r,b]=[565,355,935,575],sc=this.size/1280;
+    if(expression!=='neutral'){const [x,y,r,b]=[565,355,935,575];
       ctx.drawImage(state,x,y,r-x,b-y,x*(this.size/base.width),y*(this.size/base.width),(r-x)*(this.size/base.width),(b-y)*(this.size/base.width));}
+    if(speech&&expression!=='blink'&&this.expression!=='neutral'&&this.expression!=='talk'){
+      const mouth=this.images[Math.sin(now*16)>.05?'talk':'neutral'],sc=this.size/base.width;
+      ctx.drawImage(mouth,640,490,125,70,640*sc,490*sc,125*sc,70*sc);}
     ctx.restore();
   }
 }
