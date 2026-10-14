@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "canvas": [
+    1254,
+    1254
+  ],
+  "expressions": [
+    "neutral",
+    "talk",
+    "blink",
+    "star",
+    "wink",
+    "serious"
+  ],
+  "face_region": [
+    565,
+    355,
+    935,
+    575
+  ],
+  "motions": [
+    "idle",
+    "nod",
+    "bounce",
+    "left-to-right",
+    "right-to-left"
+  ],
+  "independent_hand_rig": false,
+  "speech_sync": "audio amplitude; two mouth states, not phoneme lip sync",
+  "generation": "OpenAI image_gen, human-selected identity and expressions",
+  "reference": "https://github.com/MissGPT-DragonDen/gpt-miss-pet",
+  "reference_rights": "Publisher-held contribution CC0; original reference provenance unverified"
+}

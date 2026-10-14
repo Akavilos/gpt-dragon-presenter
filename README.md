@@ -23,4 +23,3 @@
 ## 来源与使用
 
 用户选定社区白毛龙娘形象，由 OpenAI 图像生成工具重绘高清讲解员和表情帧，动画代码为本仓库编写。参考来自 [MissGPT-DragonDen/gpt-miss-pet](https://github.com/MissGPT-DragonDen/gpt-miss-pet)。代码使用 MIT；本次制作中发布者有权处置的美术贡献使用 CC0。参考素材的原始授权链未核实，不将这部分或第三方标识权利宣称为本仓库所有。具体范围见素材说明。
-
