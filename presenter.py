@@ -22,7 +22,7 @@ class Presenter:
         return self.cache[key]
 
     def draw(self, canvas, t, x, y, width=390, expression='neutral', speaking=False,
-             mirrored=False, bounce=0, turn=1):
+             mirrored=False, bounce=0, turn=1, rotation=0, bob_amplitude=4, bob_frequency=2.5):
         forced_talk=expression=='talk'
         if expression in ('neutral','talk'):
             if t%4.3>4.12:expression='blink'
@@ -34,6 +34,11 @@ class Presenter:
         if turn<1:
             image=image.resize((max(1,round(width*turn)),width),Image.Resampling.LANCZOS)
             x+=(width-image.width)/2
+        if rotation:
+            rotated=image.rotate(rotation,Image.Resampling.BICUBIC,expand=True)
+            x+=(image.width-rotated.width)/2
+            y+=(image.height-rotated.height)/2
+            image=rotated
         # A common base silhouette prevents drift across generated expression variants.
-        bob=math.sin(t*2.5)*4-bounce
+        bob=math.sin(t*bob_frequency)*bob_amplitude-bounce
         canvas.alpha_composite(image,(round(x),round(y+bob)))

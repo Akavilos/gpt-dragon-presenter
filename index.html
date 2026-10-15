@@ -3,16 +3,16 @@
 <style>body{margin:0;background:#0e1524;color:#e7e9ff;font:16px system-ui,sans-serif}main{max-width:1250px;margin:auto;padding:32px}h1{font-size:30px;margin:0 0 8px}p{color:#a9b4cc;line-height:1.7}canvas{width:100%;border:1px solid #374361;border-radius:20px;background:repeating-conic-gradient(#222d44 0% 25%,#172138 0% 50%) 0/24px 24px}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}button,select,input{font:inherit;border:1px solid #495a7a;border-radius:10px;background:#202e47;color:#eef1ff;padding:10px 16px}button{cursor:pointer}button:hover{background:#394666}label{display:flex;align-items:center;gap:8px;font-size:14px}small{color:#9dabc2}footer{padding:12px 0}</style>
 <main><h1>白毛龙娘 · 动画讲解员</h1><p>轻微弹动、点头、眨眼、星星眼与左右转身。选择音频后，嘴部随声音开合。</p>
 <canvas id="stage" width="1536" height="864"></canvas>
-<div class="controls"><select id="expression"><option value="neutral">常态 / 自动眨眼</option><option value="talk">说话</option><option value="blink">眨眼</option><option value="star">星星眼</option><option value="wink">俏皮</option><option value="serious">认真</option></select>
-<button id="left">移到左边</button><button id="right">移到右边</button><button id="bounce">点头 / 弹动</button><button id="mirror">原地镜像</button><button id="pause">暂停</button>
-<select id="background"><option value="#131b30">深色背景</option><option value="#f0edf8">浅色背景</option><option value="#00ff00">绿幕背景</option><option value="transparent">透明背景</option></select></div>
+<div class="controls"><select id="expression"><option value="neutral">常态 / 自动眨眼</option><option value="talk">说话</option><option value="blink">眨眼</option><option value="star">星星眼</option><option value="wink">俏皮</option><option value="serious">认真</option><option value="annoyed">小生气</option></select>
+<button id="left">移到左边</button><button id="right">移到右边</button><button id="center">移到中间</button><button id="enter">从右侧入场</button><button id="bounce">点头 / 弹动</button><button id="mirror">原地镜像</button><button id="pause">暂停</button>
+<select id="background"><option value="#f5f3f8">浅色背景</option><option value="#131b30">深色背景</option><option value="#00ff00">绿幕背景</option><option value="transparent">透明背景</option></select></div>
 <div class="controls"><label>角色大小<input id="size" type="range" min="250" max="680" value="440"></label><label>动作幅度<input id="amplitude" type="range" min="0" max="18" value="7"></label><label>本地音频<input id="sound" type="file" accept="audio/*"></label></div>
 <audio id="audio" controls></audio><footer><small>音频仅在本机播放。当前为双口型与画像动画，手部保持握棒姿势。素材说明见 README。</small></footer></main>
 <script src="presenter.js"></script><script>
 const presenter=new DragonPresenter(document.getElementById('stage'));let paused=false,pausedAt=0,timeOffset=0;
 const byId=id=>document.getElementById(id);byId('expression').onchange=e=>presenter.expression=e.target.value;
 byId('left').onclick=()=>presenter.move('left',performance.now()/1000-timeOffset);byId('right').onclick=()=>presenter.move('right',performance.now()/1000-timeOffset);
-byId('bounce').onclick=()=>presenter.bounce(performance.now()/1000-timeOffset);byId('mirror').onclick=()=>{presenter.mirrored=!presenter.mirrored;presenter.moveStart=-100;};
+byId('center').onclick=()=>presenter.move('center',performance.now()/1000-timeOffset);byId('enter').onclick=()=>presenter.enter(performance.now()/1000-timeOffset);byId('bounce').onclick=()=>presenter.bounce(performance.now()/1000-timeOffset);byId('mirror').onclick=()=>{presenter.mirrored=!presenter.mirrored;presenter.moveStart=-100;};
 byId('size').oninput=e=>{presenter.size=+e.target.value;presenter.origin=presenter.destination=presenter.x=Math.min(presenter.x,1536-presenter.size-45);};
 byId('amplitude').oninput=e=>presenter.amplitude=+e.target.value;byId('background').onchange=e=>presenter.background=e.target.value;
 byId('pause').onclick=()=>{paused=!paused;if(paused)pausedAt=performance.now()/1000;else timeOffset+=performance.now()/1000-pausedAt;byId('pause').textContent=paused?'继续':'暂停';};
